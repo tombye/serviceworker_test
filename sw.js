@@ -18,7 +18,7 @@ self.addEventListener('activate', event => {
 function fetchFromCache (event) {
 	return caches.match(event.request)
 		.then(response => {
-			if !(response) {
+			if (!response) {
 				throw Error('${event.request.url} not found in cache');
 			}
 			return response;
