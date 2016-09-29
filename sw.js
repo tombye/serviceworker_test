@@ -34,6 +34,7 @@ function shouldHandleFetch (event) {
 	var isSameOrigin = (url.origin === self.location.origin);
 
 	if (isGetRequest && isSameOrigin) {
+		console.log('Request made for ${url.pathname}');
 		return (url.pathname.match(/panda\.png/) !== null)
 	}
 	return false;
