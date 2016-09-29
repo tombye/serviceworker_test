@@ -14,3 +14,33 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
 
 });
+
+function fetchFromCache (event) {
+	return caches.match(event.request)
+		.then(response => {
+			if !(response) {
+				throw Error('${event.request.url} not found in cache');
+			}
+			return response;
+		})
+};
+
+function shouldHandleFetch (event) {
+	var request = event.request;
+	var url = new URL(request.url);
+
+	# conditions
+	var isGetRequest = request.method === 'GET';
+	var isSameOrigin = url.origin === self.location.origin;
+
+	if (isGetRequest && isSameOrigin) {
+		return (url.pathname.match(/panda\.png/) !== null)
+	}
+	return false;
+};
+
+self.addEventListener('fetch', event => {
+	if (shouldHandleFetch(event)) {
+		fetchFromCache(event);
+	}
+});
