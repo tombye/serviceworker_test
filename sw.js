@@ -29,7 +29,7 @@ function shouldHandleFetch (event) {
 	var request = event.request;
 	var url = new URL(request.url);
 
-	# conditions
+	// conditions
 	var isGetRequest = request.method === 'GET';
 	var isSameOrigin = url.origin === self.location.origin;
 
