@@ -29,6 +29,7 @@ function shouldHandleFetch (event) {
 	var request = event.request;
 	var url = new URL(request.url);
 
+	console.log('URL is ${url.pathname}');
 	// conditions
 	var isGetRequest = (request.method === 'GET');
 	var isSameOrigin = (url.origin === self.location.origin);
@@ -41,6 +42,7 @@ function shouldHandleFetch (event) {
 };
 
 self.addEventListener('fetch', event => {
+	console.log('fetch called');
 	if (shouldHandleFetch(event)) {
 		fetchFromCache(event);
 	}
