@@ -19,7 +19,7 @@ function fetchFromCache (event) {
 	return caches.match(event.request)
 		.then(response => {
 			if (!response) {
-				throw Error('${event.request.url} not found in cache');
+				throw Error(`${event.request.url} not found in cache`);
 			}
 			return response;
 		})
@@ -29,13 +29,13 @@ function shouldHandleFetch (event) {
 	var request = event.request;
 	var url = new URL(request.url);
 
-	console.log('URL is ${url.pathname}');
+	console.log(`URL is ${url.pathname}`);
 	// conditions
 	var isGetRequest = (request.method === 'GET');
 	var isSameOrigin = (url.origin === self.location.origin);
 
 	if (isGetRequest && isSameOrigin) {
-		console.log('Request made for ${url.pathname}');
+		console.log(`Request made for ${url.pathname}`);
 		return (url.pathname.match(/panda\.png/) !== null)
 	}
 	return false;
