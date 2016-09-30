@@ -1,19 +1,4 @@
 // serviceworker script
-self.addEventListener('install', event => {
-	function onInstall () {
-		return caches.open('static')
-			.then(cache => cache.addAll([
-					'/serviceworker_test/images/panda.png'
-				])
-			);
-	}
-
-	event.waitUntil(onInstall(event));
-});
-
-self.addEventListener('activate', event => {
-
-});
 
 function fetchFromCache (event) {
 	return caches.match(event.request)
@@ -51,14 +36,27 @@ function addToCache (cacheKey, request, response) {
     return response;
   }
 };
-
-self.addEventListener('fetch', event => {
-	console.log('fetch called at ' + Date.now());
-  var cacheKey = 'static';
-
-	if (shouldHandleFetch(event)) {
-    event.respondWith(
-      fetchFromCache(event)
-    );
+self.addEventListener('install', event => {
+	function onInstall () {
+		return caches.open('static')
+			.then(cache => cache.addAll([
+					'/serviceworker_test/images/panda.png'
+				])
+			);
 	}
+
+	event.waitUntil(onInstall(event));
+});
+
+self.addEventListener('activate', event => {
+  self.addEventListener('fetch', event => {
+    console.log('fetch called at ' + Date.now());
+    var cacheKey = 'static';
+
+    if (shouldHandleFetch(event)) {
+      event.respondWith(
+        fetchFromCache(event)
+      );
+    }
+  });
 });
