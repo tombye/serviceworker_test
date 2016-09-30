@@ -54,6 +54,8 @@ function addToCache (cacheKey, request, response) {
 
 self.addEventListener('fetch', event => {
 	console.log('fetch called at ' + Date.now());
+  var cacheKey = 'static';
+
 	if (shouldHandleFetch(event)) {
     event.respondWith(
       fetchFromCache(event)
