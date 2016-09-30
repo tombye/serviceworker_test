@@ -60,7 +60,7 @@ self.addEventListener('fetch', event => {
     event.respondWith(
       fetchFromCache(event)
       .catch(() => fetch(event.request))
-      .then(response => addToCache(cacheKey, request, response))
+      .then(response => addToCache(cacheKey, event.request, response))
     );
 	}
 });
