@@ -41,9 +41,24 @@ function shouldHandleFetch (event) {
 	return false;
 };
 
+function addToCache (cacheKey, request, response) {
+  if (response.ok) {
+    var copy = response.clone();
+    caches.open(cacheKey).then(
+      cache => {
+        cache.put(request, copy);
+      });
+    return response;
+  }
+};
+
 self.addEventListener('fetch', event => {
 	console.log('fetch called at ' + Date.now());
 	if (shouldHandleFetch(event)) {
-		fetchFromCache(event);
+    event.respondWith(
+      fetchFromCache(event)
+      .catch(() => fetch(event.request))
+      .then(response => addToCache(cacheKey, request, response))
+    );
 	}
 });
