@@ -42,7 +42,7 @@ function shouldHandleFetch (event) {
 };
 
 self.addEventListener('fetch', event => {
-	console.log('fetch called');
+	console.log('fetch called at ' + Date.now());
 	if (shouldHandleFetch(event)) {
 		fetchFromCache(event);
 	}

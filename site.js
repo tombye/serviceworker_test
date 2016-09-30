@@ -4,3 +4,5 @@ if ('serviceWorker' in navigator) {
 		'scope': '/serviceworker_test/'
 	});
 }
+
+console.log(Date.now());
